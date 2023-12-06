@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal';
 import GoogleIcon from '@/assets/images/google.png'
 import LinkedinIcon from '@/assets/images/linkedin.svg'
+import {
+  LoginSocialGoogle,
+  LoginSocialLinkedin,
+  IResolveParams
+} from 'reactjs-social-login';
+// import { useSelector, useDispatch } from "react-redux";
+// import { selectAvatarURL, selectUserName, selectLoginStatus, setLoginStatus, setAvatarURL, setUserName, setUserId, setUserEmail, selectUserId, selectUserEmail, setLoginProvider } from "@/store/status";
 
 const customStyles = {
   overlay: {
@@ -29,6 +36,11 @@ export type LoginProps = {
   closeModal: () => void
 }
 export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }: LoginProps) => {
+  // const dispatch = useDispatch()
+  
+  const [provider, setProvider] = useState('');
+  const [profile, setProfile] = useState<any>();
+
   const handleGoogleSignIn = async () => {
     console.log("Google Login")
   }
@@ -36,6 +48,22 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
   const handleLinkedinSignin = async () => {
     console.log("Linkedin Login");
   }
+
+  const authLogin = async (provider: string, profile: any) => {
+    console.log("Interacting Provider ", provider);
+    console.log("Interacting Profile ", profile);
+    // dispatch(setUserId(user.uid))
+    // dispatch(setLoginProvider(provider))
+    // dispatch(setUserEmail(profile.email));
+    // dispatch(setUserName(profile.name));
+    // dispatch(set)
+  }
+
+  useEffect(() => {
+    if(provider && profile) {
+      authLogin(provider, profile)
+    }
+  }, [provider, profile])
 
   return (
     <div>
@@ -52,11 +80,50 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
           </div>
           <div className='px-20'>
             <div className='w-full flex flex-col space-y-14 py-8 px-10'>
-              <div className='w-full flex space-x-4 justify-center items-center cursor-pointer' onClick={()=>handleGoogleSignIn()}>
-                <img src={GoogleIcon} alt='Google Icon' className='w-[100px]' />
+              <div className='w-full flex space-x-4 justify-center items-center cursor-pointer'>
+                <LoginSocialGoogle
+                  client_id={"1044491487797-iu6gkav7vtunq9a6l432tvufgv5eqoch.apps.googleusercontent.com"}
+                  onLoginStart={handleGoogleSignIn}
+                  redirect_uri={"http://127.0.0.1:4000"}
+                  // typeResponse="idToken"
+                  scope="openid profile email"
+                  // isOnlyGetToken
+                  ux_mode="popup"
+                  discoveryDocs="claims_supported"
+                  access_type="online"
+                  onResolve={({ provider, data }: IResolveParams) => {
+                    console.log("provider", provider);
+                    console.log("data", data);
+                    setProvider(provider);
+                    setProfile(data);
+                  }}
+                  onReject={(err: any) => {
+                    console.log(err);
+                  }}
+                >
+                  <img src={GoogleIcon} alt='Google Icon' className='w-[100px]' />
+                </LoginSocialGoogle>
               </div>
 
               <div className='w-full flex space-x-4 justify-center items-center cursor-pointer' onClick={()=>handleLinkedinSignin()}>
+                <LoginSocialLinkedin
+                  // isOnlyGetToken
+                  client_id={'86e6qf8zqc75ve'}
+                  client_secret={'2hpm6KXIBu4B0bO1'}
+                  redirect_uri={"http://127.0.0.1:4000"}
+                  // scope="r_emailaddress,r_liteprofile,w_member_social"
+                  onLoginStart={handleLinkedinSignin}
+                  onResolve={({ provider, data }: IResolveParams) => {
+                    console.log("provider", provider);
+                    console.log("data", data);
+                    setProvider(provider)
+                    setProfile(data)
+                  }}
+                  onReject={(err: any) => {
+                    console.log(err)
+                  }}
+                >
+                </LoginSocialLinkedin>
                 <img src={LinkedinIcon} alt='Google Icon' className='w-[100px]' />
               </div>
             </div>
