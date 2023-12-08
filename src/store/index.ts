@@ -1,8 +1,9 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import { statusReducer } from './status';
-import { createWrapper } from 'next-redux-wrapper';
+// import { createWrapper } from 'next-redux-wrapper';
 import storage from 'redux-persist/lib/storage';
+import {api} from './culero.api';
 const rootReducer = combineReducers({
   'status': persistReducer(
     {
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     },
     statusReducer,
   ),
+  [api.reducerPath]: api.reducer
 });
 
 export const store = configureStore({
@@ -21,11 +23,15 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
-});
+    }).concat(api.middleware),
+}); 
 
 
-const makeStore = () => store
+// const makeStore = () => store
 
-export const persistor = persistStore(store)
-export const wrapper = createWrapper(makeStore)
+// export const persistor = persistStore(store)
+// export const wrapper = createWrapper(makeStore)
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+export type AppDispatch = typeof store.dispatch;

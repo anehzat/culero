@@ -1,15 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import {  useNavigate } from "react-router-dom";
 import { Logo } from '../UI/Logo'
 import { Divide as Hamburger } from 'hamburger-react'
 import { NavItem, items } from '../../contents/Navbar'
 import { Link } from 'react-router-dom'
 import { AuthModal } from '../Auth'
+import DefaultAvatar from '@/assets/images/default_avatar.png';
 
 export const Navbar = () => {
   const [nav, setNav] = useState(false)
   const [navbarClass, setNavbarClass] = useState('')
   const [tempLocation, setTempLocation] = useState('/')
   const [authModalIsOpen, setAuthIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  let navigate = useNavigate();
+
+  const isLoginStatus = true;
+
+  const ref = useRef(null)
 
   const showNav = () => {
     setNav((v) => !v)
@@ -37,9 +46,31 @@ export const Navbar = () => {
     setAuthIsOpen(true);
   }
 
+  const openPage = (page: string) => {
+    navigate(`/${page}`)
+  }
+
   useEffect(() => {
     setTempLocation(location.pathname)
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    const handleOutSideClick = (event: { target: any; }) => {
+      const currentEle = ref.current as any
+      if (!currentEle) {
+        return
+      }
+      if (!currentEle.contains(event.target)) {
+        setIsDropdownOpen(false)
+      }
+    };
+
+    window.addEventListener("mousedown", handleOutSideClick);
+
+    return () => {
+      window.removeEventListener("mousedown", handleOutSideClick);
+    };
+  }, [ref])
 
   return (
     <div
@@ -51,7 +82,7 @@ export const Navbar = () => {
       <header className={`w-full  max-w-[1920px] flex justify-between items-center px-9 xl:px-[180px] lg:px-[50px] `}>
         <Logo />
         {/* desktop nav */}
-        <nav className="hidden lg:flex gap-20 ">
+        <nav className="hidden lg:flex items-center gap-20 ">
           {items.map((item: NavItem, index: number) => (
             <Link
               key={index}
@@ -68,7 +99,38 @@ export const Navbar = () => {
               {item.title}
             </Link>
           ))}
-          <a className={'text-cblack-500 font-medium hover:cursor-pointer navbar_active'} onClick={()=> openModal()}><span>Login</span></a>
+          {
+            !isLoginStatus ?
+              <div className="relative">
+                <span className="" onClick={() => setIsDropdownOpen(true)}>
+                  <img src={DefaultAvatar} alt="Profile Icon" className="rounded-[50%] w-[35px] h-[33px] cursor-pointer" />
+                </span>
+                {
+                  isDropdownOpen &&
+                  <div className="absolute w-[260px] bg-[#5f6fdb] px-6 py-4 rounded-[10px] right-0" ref={ref}>
+                    <div className="w-full flex justify-center items-center space-x-4 px-1 pb-4 border-b border-[#6F6E6E] mb-4">
+                      <img src={DefaultAvatar} alt="Profile Icon" className="rounded-[50%] w-[35px] h-[33px]" />
+                      <span className="text-[18px]">User Name</span>
+                    </div>
+                    <button className="w-full text-center text-[18px] px mb-4 hover:text-[#01A7F5]" onClick={()=>openPage('profile')}>
+                      Profile & Settings
+                    </button>
+                    <button className="w-full text-center text-[18px] px mb-4 hover:text-[#01A7F5]" onClick={()=>openPage('feed')}>
+                      Feed
+                    </button>
+                    <button className="w-full text-center text-[18px] px mb-4 hover:text-[#01A7F5]" onClick={()=>openPage('review')}>
+                      Review
+                    </button>
+                    <button className="w-full text-center text-[18px] hover:text-[#01A7F5]">
+                      Sign out
+                    </button>
+                  </div>
+                }
+
+              </div>
+              :
+              <a className={'text-cblack-500 font-medium hover:cursor-pointer navbar_active'} onClick={() => openModal()}><span>Login</span></a>
+          }
         </nav>
 
         {/* hamburger */}
@@ -84,9 +146,8 @@ export const Navbar = () => {
 
         {/* mobile nav */}
         <nav
-          className={`h-[300px] right-0 fixed flex flex-col justify-around items-center w-full lg:hidden bg-white shadow-[0_0_9px_1px_rgba(0,0,0,0.5)] z-40 duration-1000 ${
-            nav ? 'top-[0px]' : '-top-[300px]'
-          } `}
+          className={`h-[300px] right-0 fixed flex flex-col justify-around items-center w-full lg:hidden bg-white shadow-[0_0_9px_1px_rgba(0,0,0,0.5)] z-40 duration-1000 ${nav ? 'top-[0px]' : '-top-[300px]'
+            } `}
         >
           {items.map((item: NavItem, index: number) => (
             <a

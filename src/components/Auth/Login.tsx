@@ -83,13 +83,14 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
               <div className='w-full flex space-x-4 justify-center items-center cursor-pointer'>
                 <LoginSocialGoogle
                   client_id={"1044491487797-iu6gkav7vtunq9a6l432tvufgv5eqoch.apps.googleusercontent.com"}
+                  secret = {"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"}
                   onLoginStart={handleGoogleSignIn}
                   redirect_uri={"http://127.0.0.1:4000"}
-                  // typeResponse="idToken"
+                  typeResponse="idToken"
                   scope="openid profile email"
                   // isOnlyGetToken
                   ux_mode="popup"
-                  discoveryDocs="claims_supported"
+                  // discoveryDocs="claims_supported"
                   access_type="online"
                   onResolve={({ provider, data }: IResolveParams) => {
                     console.log("provider", provider);
@@ -111,7 +112,7 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
                   client_id={'86e6qf8zqc75ve'}
                   client_secret={'2hpm6KXIBu4B0bO1'}
                   redirect_uri={"http://127.0.0.1:4000"}
-                  // scope="r_emailaddress,r_liteprofile,w_member_social"
+                  scope="r_emailaddress,r_liteprofile,w_member_social"
                   onLoginStart={handleLinkedinSignin}
                   onResolve={({ provider, data }: IResolveParams) => {
                     console.log("provider", provider);
