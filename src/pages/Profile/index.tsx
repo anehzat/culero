@@ -14,7 +14,7 @@ export const Profile = () => {
         if(!user) {
             navigate('/');
         }
-    }, []);
+    }, [user]);
 
     return (
         <div className='h-screen flex flex-col justify-center bg-gradient-to-t from-[#3231b2ad] to-[#aeb3e97d]'>

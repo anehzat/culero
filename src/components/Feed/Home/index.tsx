@@ -3,6 +3,7 @@ import { FaGithub } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { IoIosMore } from "react-icons/io";
 import ReactStars from 'react-stars'
+import parse from "html-react-parser";
 
 export const FeedUserTab: React.FC<FeedData> = ({index, avatar, name, star, link, socialPlatform, review, selectUser}: FeedData) => {
     const setUser = () => {
@@ -41,7 +42,7 @@ export const FeedUserTab: React.FC<FeedData> = ({index, avatar, name, star, link
             <div className='w-[30%] text-white'>
                 <p className='line-clamp-2'>
                     {
-                        review
+                        parse(review)
                     }
                 </p>
             </div>

@@ -18,9 +18,9 @@ export const Feed = () => {
         if (!user) {
             navigate('/');
         }
-    }, []);
+    }, [user]);
 
-    const [skip, setSkip] = useState(10);
+    const [skip, ] = useState(10);
     const [pageIndex, setPageIndex] = useState(1);
     const [searchText, setSearhText] = useState('');
 

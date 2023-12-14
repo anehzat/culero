@@ -8,29 +8,6 @@ import { useSelector } from 'react-redux';
 import ReactStars from 'react-stars'
 
 export const FeedDetail: React.FC<FeedDetailType> = ({selectedItem, backWard} : FeedDetailType) => {
-    // const dumyReviewDetailData = [
-    //     {
-    //         id: 1,
-    //         avatar: '',
-    //         name: "Ben Hong",
-    //         star: 4.0,
-    //         review: `I wanted to express my appreciation for your guidance and support. Your leadership style has created a positive work environment. I value the opportunities for learning and growth. Looking forward to continuing to contribute to the team's success.`
-    //     },
-    //     {
-    //         id: 2,
-    //         avatar: '',
-    //         name: "Ben Hong",
-    //         star: 4.5,
-    //         review: `Thank you for your exceptional leadership and mentorship. Your strategic vision and supportive approach have significantly contributed to our team's success. I value the opportunities for professional development and the collaborative atmosphere you foster. Excited about the continued journey ahead under your guidance.`
-    //     },
-    //     {
-    //         id: 3,
-    //         avatar: '',
-    //         name: "Ben Hong",
-    //         star: 4.8,
-    //         review: `I wanted to express my gratitude for the excellent support and guidance I've received. Your leadership has created a positive and motivating work environment. I appreciate the opportunities for growth and the open communication within the team. Looking forward to continuing our success together.`
-    //     }
-    // ]
 
     const dummyReviewData = useSelector(selectDummyReviewData);
     const back = () => {

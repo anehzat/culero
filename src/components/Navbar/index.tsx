@@ -6,10 +6,12 @@ import { NavItem, items } from '../../contents/Navbar'
 import { Link } from 'react-router-dom'
 import { AuthModal } from '../Auth'
 import DefaultAvatar from '@/assets/images/default_avatar.png';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectUser, setUser, setAuthToken } from '@/store/status';
 
 export const Navbar = () => {
+  const dispatch = useDispatch();
+
   const [nav, setNav] = useState(false)
   const [navbarClass, setNavbarClass] = useState('')
   const [tempLocation, setTempLocation] = useState('/')
@@ -53,10 +55,9 @@ export const Navbar = () => {
   }
 
   const signOut = () => {
-    console.log("Sign Out 1");
-    setUser(null);
-    setAuthToken(null);
-    console.log("Sign Out 2");
+    navigate(`/`)
+    dispatch(setUser(null));
+    dispatch(setAuthToken(null));
   }
 
   useEffect(() => {
