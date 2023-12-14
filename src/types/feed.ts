@@ -1,6 +1,22 @@
 export type FeedData = {
-    id: number,
+    index: number,
     avatar: string,
     name: string,
-    star: number
+    link: string,
+    star: number,
+    socialPlatform: string,
+    review: string,
+    selectUser: (index: number) => void
+}
+
+export type FeedDetailType = {
+    selectedItem: number,
+    backWard: () => void
+}
+
+export type ReviewDetailType = {
+    name: string,
+    avatar: string,
+    star: number,
+    review: string
 }

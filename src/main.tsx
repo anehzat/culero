@@ -14,7 +14,7 @@ import { PersistGate } from "redux-persist/integration/react";
 const persistor = persistStore(store);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <ContentsProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
@@ -30,8 +30,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"
+        theme="colored"
       />
-    </ContentsProvider>
-  </React.StrictMode>,
+    </ContentsProvider>,
 )

@@ -6,6 +6,8 @@ import { NavItem, items } from '../../contents/Navbar'
 import { Link } from 'react-router-dom'
 import { AuthModal } from '../Auth'
 import DefaultAvatar from '@/assets/images/default_avatar.png';
+import { useSelector } from 'react-redux';
+import { selectUser, setUser, setAuthToken } from '@/store/status';
 
 export const Navbar = () => {
   const [nav, setNav] = useState(false)
@@ -16,8 +18,8 @@ export const Navbar = () => {
 
   let navigate = useNavigate();
 
-  const isLoginStatus = true;
-
+  // const isLoginStatus = true;
+  const user = useSelector(selectUser);
   const ref = useRef(null)
 
   const showNav = () => {
@@ -48,6 +50,13 @@ export const Navbar = () => {
 
   const openPage = (page: string) => {
     navigate(`/${page}`)
+  }
+
+  const signOut = () => {
+    console.log("Sign Out 1");
+    setUser(null);
+    setAuthToken(null);
+    console.log("Sign Out 2");
   }
 
   useEffect(() => {
@@ -100,7 +109,7 @@ export const Navbar = () => {
             </Link>
           ))}
           {
-            !isLoginStatus ?
+            user ?
               <div className="relative">
                 <span className="" onClick={() => setIsDropdownOpen(true)}>
                   <img src={DefaultAvatar} alt="Profile Icon" className="rounded-[50%] w-[35px] h-[33px] cursor-pointer" />
@@ -121,7 +130,7 @@ export const Navbar = () => {
                     <button className="w-full text-center text-[18px] px mb-4 hover:text-[#01A7F5]" onClick={()=>openPage('review')}>
                       Review
                     </button>
-                    <button className="w-full text-center text-[18px] hover:text-[#01A7F5]">
+                    <button className="w-full text-center text-[18px] hover:text-[#01A7F5]" onClick={()=>signOut()}>
                       Sign out
                     </button>
                   </div>

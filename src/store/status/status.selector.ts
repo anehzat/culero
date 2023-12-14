@@ -5,10 +5,7 @@ export const selectStatusRoot = createSelector(
     (state) => state.status,
 );
 
-export const selectLoginProvider = createSelector(selectStatusRoot, (state) => state?.loginProvider);
-export const selectLoginStatus = createSelector(selectStatusRoot, (state) => state?.loginStatus);
-export const selectUserId = createSelector(selectStatusRoot, (state) => state?.userId);
-export const selectUserEmail = createSelector(selectStatusRoot, (state) => state?.userEmail);
-export const selectUserName = createSelector(selectStatusRoot, (state) => state?.fullName);
-export const selectAvatarURL = createSelector(selectStatusRoot, (state) => state?.avatarURL);
 export const selectAuthToken = createSelector(selectStatusRoot, (state) => state?.authToken);
+export const selectUser = createSelector(selectStatusRoot, (state) => state?.user);
+export const selectDummyReviewData = createSelector(selectStatusRoot, (state) => state?.dumyReviewData);
+export const selectTotalDummyReviewCount = createSelector(selectStatusRoot, (state) => state?.totalDummyReviewCount);

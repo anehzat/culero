@@ -7,6 +7,8 @@ import {
   LoginSocialLinkedin,
   IResolveParams
 } from 'reactjs-social-login';
+import { api } from '@/store/culero.api';
+import { LoginRequest } from '@/store/interface';
 // import { useSelector, useDispatch } from "react-redux";
 // import { selectAvatarURL, selectUserName, selectLoginStatus, setLoginStatus, setAvatarURL, setUserName, setUserId, setUserEmail, selectUserId, selectUserEmail, setLoginProvider } from "@/store/status";
 
@@ -36,13 +38,13 @@ export type LoginProps = {
   closeModal: () => void
 }
 export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }: LoginProps) => {
-  // const dispatch = useDispatch()
-  
   const [provider, setProvider] = useState('');
   const [profile, setProfile] = useState<any>();
+  const [login] = api.useLoginMutation();
 
-  const handleGoogleSignIn = async () => {
-    console.log("Google Login")
+  const handleGoogleSignIn = async (req: LoginRequest) => {
+    const result = await login(req)
+    if ((result as any).data) closeModal();
   }
 
   const handleLinkedinSignin = async () => {
@@ -52,11 +54,6 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
   const authLogin = async (provider: string, profile: any) => {
     console.log("Interacting Provider ", provider);
     console.log("Interacting Profile ", profile);
-    // dispatch(setUserId(user.uid))
-    // dispatch(setLoginProvider(provider))
-    // dispatch(setUserEmail(profile.email));
-    // dispatch(setUserName(profile.name));
-    // dispatch(set)
   }
 
   useEffect(() => {
@@ -83,20 +80,23 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
               <div className='w-full flex space-x-4 justify-center items-center cursor-pointer'>
                 <LoginSocialGoogle
                   client_id={"1044491487797-iu6gkav7vtunq9a6l432tvufgv5eqoch.apps.googleusercontent.com"}
-                  secret = {"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"}
-                  onLoginStart={handleGoogleSignIn}
-                  redirect_uri={"http://127.0.0.1:4000"}
-                  typeResponse="idToken"
+                  // typeResponse="idToken"
                   scope="openid profile email"
-                  // isOnlyGetToken
                   ux_mode="popup"
-                  // discoveryDocs="claims_supported"
                   access_type="online"
                   onResolve={({ provider, data }: IResolveParams) => {
                     console.log("provider", provider);
                     console.log("data", data);
-                    setProvider(provider);
-                    setProfile(data);
+                    const req = {
+                      email: data.email,
+                      firstname: data.given_name,
+                      lastname: data.family_name,
+                      name: data.name,
+                      picture: data.picture,
+                      token: data.access_token,
+                      type: provider
+                    }
+                    handleGoogleSignIn(req)
                   }}
                   onReject={(err: any) => {
                     console.log(err);
@@ -106,13 +106,18 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
                 </LoginSocialGoogle>
               </div>
 
-              <div className='w-full flex space-x-4 justify-center items-center cursor-pointer' onClick={()=>handleLinkedinSignin()}>
+              
                 <LoginSocialLinkedin
-                  // isOnlyGetToken
+                  isOnlyGetToken
                   client_id={'86e6qf8zqc75ve'}
                   client_secret={'2hpm6KXIBu4B0bO1'}
                   redirect_uri={"http://127.0.0.1:4000"}
+                  // client_id={"863h4lfylai4p4"}
+						      // client_secret="tk8941wp1Udr8AtJ"
+                  // redirect_uri="https://react-social-login.netlify.app/account/login"
+                  
                   scope="r_emailaddress,r_liteprofile,w_member_social"
+                  typeResponse="idToken"
                   onLoginStart={handleLinkedinSignin}
                   onResolve={({ provider, data }: IResolveParams) => {
                     console.log("provider", provider);
@@ -124,9 +129,11 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
                     console.log(err)
                   }}
                 >
-                </LoginSocialLinkedin>
-                <img src={LinkedinIcon} alt='Google Icon' className='w-[100px]' />
+                  <div className='w-full flex space-x-4 justify-center items-center cursor-pointer'>
+                  <img src={LinkedinIcon} alt='Google Icon' className='w-[100px]' />
               </div>
+                </LoginSocialLinkedin>
+                
             </div>
           </div>
         </div>
