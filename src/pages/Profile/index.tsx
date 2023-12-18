@@ -20,6 +20,10 @@ export const Profile = () => {
     const user = useSelector(selectUser);
 
     useEffect(()=> {
+        
+    }, [showReviewButton]);
+
+    useEffect(()=> {
         if(!user) {
             navigate('/');
         }

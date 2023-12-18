@@ -1,16 +1,16 @@
 // import { FeedDetail } from '@/components/Feed/Detail';
-import { FeedUserTab } from '@/components/Feed/Home';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import Pagination from '@/components/Pagination/pagniation';
-import { api } from '@/store/culero.api';
-import {  useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
+// import { FeedUserTab } from '@/components/Feed/Home';
+// import { useEffect } from 'react';
+// import { useState } from 'react';
+// import Pagination from '@/components/Pagination/pagniation';
+// import { api } from '@/store/culero.api';
+// import {  useNavigate } from "react-router-dom";
+// import { useSelector } from 'react-redux';
 // import { selectUser, selectAuthToken, selectDummyReviewData, selectTotalDummyReviewCount } from '@/store/status';
-import { IReview } from '@/store/interface';
+// import { IReview } from '@/store/interface';
 
 export const Feed = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     // const user = useSelector(selectUser);
 

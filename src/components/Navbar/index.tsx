@@ -19,6 +19,10 @@ export const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchText, setSearhText] = useState('');
 
+  useEffect(()=> {
+
+  }, [searchText]);
+
   let navigate = useNavigate();
 
   // const isLoginStatus = true;

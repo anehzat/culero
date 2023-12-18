@@ -10,8 +10,8 @@ import {
 } from 'reactjs-social-login';
 import { api } from '@/store/culero.api';
 import { LoginRequest } from '@/store/interface';
-import { useSelector } from 'react-redux';
-import { selectUser } from '@/store/status';
+// import { useSelector } from 'react-redux';
+// import { selectUser } from '@/store/status';
 // import { useSelector, useDispatch } from "react-redux";
 // import { selectAvatarURL, selectUserName, selectLoginStatus, setLoginStatus, setAvatarURL, setUserName, setUserId, setUserEmail, selectUserId, selectUserEmail, setLoginProvider } from "@/store/status";
 
@@ -55,9 +55,9 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
     }
   }
 
-  const handleLinkedinSignin = async () => {
-    console.log("Linkedin Login");
-  }
+  // const handleLinkedinSignin = async () => {
+  //   console.log("Linkedin Login");
+  // }
 
   const authLogin = async (provider: string, profile: any) => {
     console.log("Interacting Provider ", provider);
