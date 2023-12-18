@@ -21,10 +21,11 @@ export type ApiResponse<TPayload = unknown, TAttrName extends string = 'data'> =
   ApiSuccess;
 
 export type IUser = {
+    _id: string;
     email: string;
     firstname: string;
     lastname: string;
-    name: string;
+    username: string;
     picture: string;
     github?: string;
     linkedin?: string;
@@ -32,20 +33,12 @@ export type IUser = {
 export type IReviewDetail = {
     content: string;
     score: number;
-    reviewer_id: string;
-    reviewer_info: {
-        picture: string;
-        username: string;
-    }
+    reviewer_id: IUser;
 }
 
 export type IReview = {
-    username: string;
-    picture: string;
-    platform: string;
-    link: string;
-    avgscore: number;
-    reviews: Array<IReviewDetail>;
+    user_id: string;
+    review: Array<IReviewDetail>;
     createdAt: string;
 }
 
@@ -63,9 +56,15 @@ export type LoginResponse = ApiResponse<IUser, 'user'> & {
     jwtToken: string;
 };
 
-export type DummyReviewDataResponse = {
-    data: Array<IReview>,
+export type ReviewDataByUserResponse = {
+    reviews: IReview,
     count: number;
+}
+
+export type ReviewDataByUserRequest = {
+    user_id: string;
+    skip: number;
+    index: number;
 }
 
 export type ReviewRequest = {
@@ -75,8 +74,3 @@ export type ReviewRequest = {
     score: number;
 };
 
-export type DummyReviewDataRequest = {
-    skip: number;
-    index: number;
-    searchText: string;
-}

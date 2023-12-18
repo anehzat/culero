@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify';
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-const API_PREFIX = 'https://api.culero.com/api';
-import { setAuthToken, setDummyReviewData, setTotalDummyReviewCount, setUser } from './status';
-import { ApiError, DummyReviewDataRequest, DummyReviewDataResponse, LoginRequest, LoginResponse, ReviewRequest } from './interface';
+const API_PREFIX = 'http://localhost:3001/api';
+import { setAuthToken, setUserReviewData, setTotalUserReviewCount, setUser } from './status';
+import { ApiError, LoginRequest, LoginResponse, ReviewDataByUserRequest, ReviewDataByUserResponse, ReviewRequest } from './interface';
 
 export const displayError = (
   err: ApiError | undefined,
@@ -69,23 +69,23 @@ export const api = createApi({
         return err.data;
       },
     }),
-    getDummyReviewData: builder.mutation<DummyReviewDataResponse, { payload: DummyReviewDataRequest, token: string }>({
+    getReviewByUser: builder.mutation<ReviewDataByUserResponse, { payload: ReviewDataByUserRequest, token: string }>({
       query: ({payload, token}) => ({
         body: payload,
         method: 'POST',
-        url: '/review/getRecentReview',
+        url: '/review/getReviewByUser',
         headers: getHeadersFromToken(token, true),
       }),
       async onQueryStarted(_, { queryFulfilled, dispatch }) {
         try {
           const {
             data: {
-              data,
+              reviews,
               count
             }
           } = await queryFulfilled;
-          dispatch(setDummyReviewData(data));
-          dispatch(setTotalDummyReviewCount(count));
+          dispatch(setUserReviewData(reviews));
+          dispatch(setTotalUserReviewCount(count));
         } catch (e: any) {
           displayError(e, 'Error while logging in');
         }

@@ -7,5 +7,5 @@ export const selectStatusRoot = createSelector(
 
 export const selectAuthToken = createSelector(selectStatusRoot, (state) => state?.authToken);
 export const selectUser = createSelector(selectStatusRoot, (state) => state?.user);
-export const selectDummyReviewData = createSelector(selectStatusRoot, (state) => state?.dumyReviewData);
-export const selectTotalDummyReviewCount = createSelector(selectStatusRoot, (state) => state?.totalDummyReviewCount);
+export const selectUserReviewData = createSelector(selectStatusRoot, (state) => state?.userReviewData);
+export const selectTotalUserReviewCount = createSelector(selectStatusRoot, (state) => state?.totalUserReviewCount);

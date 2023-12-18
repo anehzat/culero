@@ -4,8 +4,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const initState = {
     authToken: null,
     user: null,
-    dumyReviewData: null,
-    totalDummyReviewCount: 0,
+    userReviewData: null,
+    totalUserReviewCount: 0,
 }
 
 const statusSlice = createSlice({
@@ -18,15 +18,15 @@ const statusSlice = createSlice({
         setUser: (state, { payload }) => {
             state.user = payload
         },
-        setDummyReviewData: (state, { payload }) => {
-            state.dumyReviewData = payload
+        setUserReviewData: (state, { payload }) => {
+            state.userReviewData = payload
         },
-        setTotalDummyReviewCount: (state, { payload }) => {
-            state.totalDummyReviewCount = payload
+        setTotalUserReviewCount: (state, { payload }) => {
+            state.totalUserReviewCount = payload
         },
     }
 })
 
-export const { setAuthToken, setUser, setDummyReviewData, setTotalDummyReviewCount } = statusSlice.actions;
+export const { setAuthToken, setUser, setUserReviewData, setTotalUserReviewCount } = statusSlice.actions;
 
 export const statusReducer = statusSlice.reducer;

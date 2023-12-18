@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
         element: <FAQ />,
       },
       {
-        path: '/profile',
+        path: '/profile/:id',
         element: <Profile/>
       },
       {

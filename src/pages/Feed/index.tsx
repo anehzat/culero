@@ -1,4 +1,4 @@
-import { FeedDetail } from '@/components/Feed/Detail';
+// import { FeedDetail } from '@/components/Feed/Detail';
 import { FeedUserTab } from '@/components/Feed/Home';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -6,56 +6,56 @@ import Pagination from '@/components/Pagination/pagniation';
 import { api } from '@/store/culero.api';
 import {  useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import { selectUser, selectAuthToken, selectDummyReviewData, selectTotalDummyReviewCount } from '@/store/status';
+// import { selectUser, selectAuthToken, selectDummyReviewData, selectTotalDummyReviewCount } from '@/store/status';
 import { IReview } from '@/store/interface';
 
 export const Feed = () => {
     const navigate = useNavigate();
 
-    const user = useSelector(selectUser);
+    // const user = useSelector(selectUser);
 
-    useEffect(() => {
-        if (!user) {
-            navigate('/');
-        }
-    }, [user]);
+    // useEffect(() => {
+    //     if (!user) {
+    //         navigate('/');
+    //     }
+    // }, [user]);
 
-    const [skip, ] = useState(10);
-    const [pageIndex, setPageIndex] = useState(1);
-    const [searchText, setSearhText] = useState('');
+    // const [skip, ] = useState(10);
+    // const [pageIndex, setPageIndex] = useState(1);
+    // const [searchText, setSearhText] = useState('');
 
-    const [detailShow, setDetailShow] = useState<Boolean>(false);
-    const token = useSelector(selectAuthToken);
-    const dummyReviewData = useSelector(selectDummyReviewData);
-    const totalCount = useSelector(selectTotalDummyReviewCount);
+    // const [detailShow, setDetailShow] = useState<Boolean>(false);
+    // const token = useSelector(selectAuthToken);
+    // const dummyReviewData = useSelector(selectDummyReviewData);
+    // const totalCount = useSelector(selectTotalDummyReviewCount);
 
-    const [selectedItem, setSelectedItem] = useState<number>(0);
-    const [getReviewData] = api.useGetDummyReviewDataMutation();
+    // const [selectedItem, setSelectedItem] = useState<number>(0);
+    // const [getReviewData] = api.useGetDummyReviewDataMutation();
 
-    const selectCurrentUser = async (index: number) => {
-        setSelectedItem(index);
-        setDetailShow(true);
-    }
+    // const selectCurrentUser = async (index: number) => {
+    //     setSelectedItem(index);
+    //     setDetailShow(true);
+    // }
 
-    const backWard = () => {
-        setDetailShow(false);
-    }
-    const getReviewDataHandler = async () => {
-        await getReviewData({
-            payload: {
-                skip,
-                index: pageIndex,
-                searchText
-            },
-            token
-        })
-    }
-    useEffect(() => {
-        getReviewDataHandler()
-    }, [searchText, pageIndex])
+    // const backWard = () => {
+    //     setDetailShow(false);
+    // }
+    // const getReviewDataHandler = async () => {
+    //     await getReviewData({
+    //         payload: {
+    //             skip,
+    //             index: pageIndex,
+    //             searchText
+    //         },
+    //         token
+    //     })
+    // }
+    // useEffect(() => {
+    //     getReviewDataHandler()
+    // }, [searchText, pageIndex])
     return (
         <div className='flex flex-col justify-center items-center bg-gradient-to-t from-[#3231b2ad] to-[#aeb3e97d]'>
-            <div className="w-[60%] mt-56 mb-5">
+            {/* <div className="w-[60%] mt-56 mb-5">
                 <input type="input" className="w-[50%] border-2 px-2 py-2 rounded-[10px] border-[#5f6fdb] bg-transparent placeholder:text-[#00000078]" placeholder='Search profile id' onChange={(e) => setSearhText(e.target.value)} />
             </div>
             <div className='flwx flex-col bg-[#5250d9a6] border border-white w-[60%] h-full rounded-lg mb-5'>
@@ -78,7 +78,7 @@ export const Feed = () => {
                     setPageIndex={setPageIndex}
                     skip={skip}
                 />
-            </div>
+            </div> */}
         </div>
     );
 }

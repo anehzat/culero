@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import GoogleIcon from '@/assets/images/google.png'
 import LinkedinIcon from '@/assets/images/linkedin.svg'
@@ -9,6 +10,8 @@ import {
 } from 'reactjs-social-login';
 import { api } from '@/store/culero.api';
 import { LoginRequest } from '@/store/interface';
+import { useSelector } from 'react-redux';
+import { selectUser } from '@/store/status';
 // import { useSelector, useDispatch } from "react-redux";
 // import { selectAvatarURL, selectUserName, selectLoginStatus, setLoginStatus, setAvatarURL, setUserName, setUserId, setUserEmail, selectUserId, selectUserEmail, setLoginProvider } from "@/store/status";
 
@@ -42,9 +45,14 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
   const [profile, setProfile] = useState<any>();
   const [login] = api.useLoginMutation();
 
+  const navigate = useNavigate();
+
   const handleGoogleSignIn = async (req: LoginRequest) => {
     const result = await login(req)
-    if ((result as any).data) closeModal();
+    if ((result as any).data) {
+      closeModal();
+      navigate(`/profile/${(result as any).data.user._id}`);
+    }
   }
 
   const handleLinkedinSignin = async () => {
@@ -57,7 +65,7 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
   }
 
   useEffect(() => {
-    if(provider && profile) {
+    if (provider && profile) {
       authLogin(provider, profile)
     }
   }, [provider, profile])
@@ -106,34 +114,31 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
                 </LoginSocialGoogle>
               </div>
 
-              
-                <LoginSocialLinkedin
-                  isOnlyGetToken
-                  client_id={'86e6qf8zqc75ve'}
-                  client_secret={'2hpm6KXIBu4B0bO1'}
-                  redirect_uri={"http://127.0.0.1:4000"}
-                  // client_id={"863h4lfylai4p4"}
-						      // client_secret="tk8941wp1Udr8AtJ"
-                  // redirect_uri="https://react-social-login.netlify.app/account/login"
-                  
-                  scope="r_emailaddress,r_liteprofile,w_member_social"
-                  typeResponse="idToken"
-                  onLoginStart={handleLinkedinSignin}
-                  onResolve={({ provider, data }: IResolveParams) => {
-                    console.log("provider", provider);
-                    console.log("data", data);
-                    setProvider(provider)
-                    setProfile(data)
-                  }}
-                  onReject={(err: any) => {
-                    console.log(err)
-                  }}
-                >
-                  <div className='w-full flex space-x-4 justify-center items-center cursor-pointer'>
-                  <img src={LinkedinIcon} alt='Google Icon' className='w-[100px]' />
-              </div>
-                </LoginSocialLinkedin>
+              <div className='w-full flex space-x-4 justify-center items-center cursor-pointer'>
+              <LoginSocialLinkedin
+                isOnlyGetToken
+                client_id={'86e6qf8zqc75ve'}
+                client_secret={'2hpm6KXIBu4B0bO1'}
+                redirect_uri={"http://localhost:4000"}
+                scope="email,profile,openid"
+                // typeResponse="idToken"
+                // onLoginStart={handleLinkedinSignin}
+                onResolve={({ provider, data }: IResolveParams) => {
+                  console.log("provider", provider);
+                  console.log("data", data);
+                  setProvider(provider)
+                  setProfile(data)
+                  // handleLinkedinSignin(req);
+                }}
+                onReject={(err: any) => {
+                  console.log(err)
+                }}
+              >
                 
+                  <img src={LinkedinIcon} alt='Linkedin Icon' className='w-[100px]' />
+              </LoginSocialLinkedin>
+              </div>
+
             </div>
           </div>
         </div>

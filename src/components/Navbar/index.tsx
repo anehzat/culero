@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Logo } from '../UI/Logo'
 import { Divide as Hamburger } from 'hamburger-react'
 import { NavItem, items } from '../../contents/Navbar'
@@ -17,6 +17,7 @@ export const Navbar = () => {
   const [tempLocation, setTempLocation] = useState('/')
   const [authModalIsOpen, setAuthIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchText, setSearhText] = useState('');
 
   let navigate = useNavigate();
 
@@ -92,7 +93,11 @@ export const Navbar = () => {
       <header className={`w-full  max-w-[1920px] flex justify-between items-center px-9 xl:px-[180px] lg:px-[50px] `}>
         <Logo />
         {/* desktop nav */}
-        <nav className="hidden lg:flex items-center gap-20 ">
+        <nav className="hidden lg:flex items-center gap-16">
+          <div className="">
+            <input type="input" className="w-full focus:outline-none border-2 px-2 py-2 rounded-[10px] border-[#5f6fdb] bg-transparent placeholder:text-[#00000078]" placeholder='Search...' onChange={(e) => setSearhText(e.target.value)} />
+          </div>
+
           {items.map((item: NavItem, index: number) => (
             <Link
               key={index}
@@ -122,16 +127,16 @@ export const Navbar = () => {
                       <img src={DefaultAvatar} alt="Profile Icon" className="rounded-[50%] w-[35px] h-[33px]" />
                       <span className="text-[18px]">User Name</span>
                     </div>
-                    <button className="w-full text-center text-[18px] px mb-4 hover:text-[#01A7F5]" onClick={()=>openPage('profile')}>
+                    <button className="w-full text-center text-[18px] px mb-4 hover:text-[#01A7F5]" onClick={() => openPage(`profile/${user._id}`)}>
                       Profile & Settings
                     </button>
-                    <button className="w-full text-center text-[18px] px mb-4 hover:text-[#01A7F5]" onClick={()=>openPage('feed')}>
+                    <button className="w-full text-center text-[18px] px mb-4 hover:text-[#01A7F5]" onClick={() => openPage('feed')}>
                       Feed
                     </button>
-                    <button className="w-full text-center text-[18px] px mb-4 hover:text-[#01A7F5]" onClick={()=>openPage('review')}>
+                    <button className="w-full text-center text-[18px] px mb-4 hover:text-[#01A7F5]" onClick={() => openPage('review')}>
                       Review
                     </button>
-                    <button className="w-full text-center text-[18px] hover:text-[#01A7F5]" onClick={()=>signOut()}>
+                    <button className="w-full text-center text-[18px] hover:text-[#01A7F5]" onClick={() => signOut()}>
                       Sign out
                     </button>
                   </div>
