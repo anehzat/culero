@@ -116,11 +116,11 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
 
               <div className='w-full flex space-x-4 justify-center items-center cursor-pointer'>
               <LoginSocialLinkedin
-                isOnlyGetToken
+                // isOnlyGetToken
                 client_id={'86e6qf8zqc75ve'}
                 client_secret={'2hpm6KXIBu4B0bO1'}
                 redirect_uri={"http://localhost:4000"}
-                scope="email,profile,openid"
+                scope="r_emailaddress,r_liteprofile"
                 // typeResponse="idToken"
                 // onLoginStart={handleLinkedinSignin}
                 onResolve={({ provider, data }: IResolveParams) => {
