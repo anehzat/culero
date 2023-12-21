@@ -12,10 +12,6 @@ export const items: Array<NavItem> = [
     link: '/about',
   },
   {
-    title: 'How it works',
-    link: '/how',
-  },
-  {
     title: 'FAQ',
     link: '/faq',
   },

@@ -26,6 +26,9 @@ export default {
         '1xl': '0px 4px 20px rgba(0, 0, 0, 0.1)',
         '3xl': '0 40px 80px 5px rgba(0, 0, 0, 0.3)'
       },
+      inset: {
+        'modal': '40% auto auto 50%',
+      }
     },
   },
   plugins: [],

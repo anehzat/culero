@@ -4,7 +4,7 @@ export const Home = () => {
   return (
     <div className="">
       <div
-        className="mx-auto relative px-9 xl:pt-[180px] lg:pt-[150px] md:pt-[120px] pt-[70px] xl:px-[180px] lg:px-[50px] lg:h-[750px] xl:h-[950px] max-w-[1920px]"
+        className="mx-auto relative px-9 xl:pt-[180px] lg:pt-[150px] md:pt-[120px] pt-[90px] xl:px-[180px] lg:px-[50px] lg:h-[750px] xl:h-[950px] max-w-[1920px]"
         id="home"
       >
         <div className="max-w-[720px] lg:pl-0 mb-4 lg:mb-0">
@@ -12,7 +12,7 @@ export const Home = () => {
           Culero
           </div>
           <div className="max-w-[482px] font-semibold text-xl md:text-2xl lg:text-[40px] leading-[23px] lg:leading-[46px] mb-6 lg:mb-12 text-black">
-            <span className="text-cpurple-500">Uncover Professional Stories </span>
+            <span className="text-cpurple-500">Empowering Workplace Transparency Through Peer Reviews </span>
           </div>
           <ButtonStart
             title={'Get Started'}

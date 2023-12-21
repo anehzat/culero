@@ -15,9 +15,10 @@ export const Review = () => {
     const navigate = useNavigate();
     const user = useSelector(selectUser);
 
-    const [addReview, ] = api.useAddReviewMutation();
+    const [addReviewByLink,] = api.useAddReviewByLinkMutation();
     const [rating, setRating] = useState<number>(0);
     const [reviewText, setReviewText] = useState("");
+    const [anonymous, setAnonymous] = useState(false);
 
     const token = useSelector(selectAuthToken);
 
@@ -40,16 +41,22 @@ export const Review = () => {
     };
 
     const onSubmit = async () => {
-        console.log(token);
-        await addReview({
+        
+        const result = await addReviewByLink({
             payload: {
                 platform: getValues('platform'),
                 link: getValues('link'),
+                reviewer_id: user._id,
+                anonymous_user: anonymous,
                 text: reviewText,
                 score: rating
             },
             token
         });
+        if((result as any).data) {
+            setReviewText("");
+            setRating(0);
+        }
     };
 
     useEffect(() => {
@@ -59,14 +66,14 @@ export const Review = () => {
     }, [user]);
 
     return (
-        <div className='h-screen flex flex-col justify-center bg-gradient-to-t from-[#3231b2ad] to-[#aeb3e97d] '>
-            <div className="mx-auto flex flex-col justify-center w-[60%] border-2 rounded-md p-8">
+        <div className='md:h-screen flex flex-col justify-center max-sm:py-20 bg-gradient-to-t from-[#3231b2ad] to-[#aeb3e97d] '>
+            <div className="mx-auto flex flex-col justify-center lg:w-[60%] md:w-[80%] w-[90%] border-2 rounded-md p-8">
                 <form
 
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <div className="w-full pb-5">
-                        <p className="font-[600] text-[14px] py-2">Please choose the social platform and input user's name who you want to leave the review</p>
+                        <p className="font-[600] md:text-[14px] text-[12px] py-2">Please choose the social platform and input user's name who you want to leave the review</p>
                         <div className="flex items-center w-full gap-2">
                             <div className="flex items-center">
                                 <select id="countries" className="bg-transparent border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" {...register('platform', { required: true })}>
@@ -91,15 +98,20 @@ export const Review = () => {
                                         className="placeholder:italic placeholder:text-[#00000078] w-full h-[150px] rounded-[10px]"
                                     />
                                 </div>
-                                <div className="flex justify-start items-center py-4 gap-2">
-                                    Rating:
-                                    <ReactStars
-                                        count={5}
-                                        value={rating}
-                                        onChange={ratingChanged}
-                                        size={25}
-                                        color2={'#ffd700'}
-                                    />
+                                <div className="flex md:flex-row flex-col max-md:mt-[20px] justify-between items-center md:py-4 py-8 gap-2">
+                                    <div className="flex justify-start items-center gap-2 md:text-[16px] text-[12px]">
+                                        Rating:
+                                        <ReactStars
+                                            count={5}
+                                            value={rating}
+                                            onChange={ratingChanged}
+                                            size={25}
+                                            color2={'#ffd700'}
+                                        />
+                                    </div>
+                                    <div className='flex gap-1 items-center md:text-[16px] text-[12px]'>
+                                        <input type='checkbox' onChange={() => setAnonymous(!anonymous)} className="" /> Send a review anonymously
+                                    </div>
                                 </div>
                                 <div className="flex justify-end">
                                     <button type="submit" className="border-2 px-4 py-2 text-center rounded-[10px] border-[#5f6fdb] bg-[#5f6fdb] hover:bg-transparent duration-200">Submit</button>

@@ -31,7 +31,7 @@ const customStyles = {
     border: 'none',
     marginTop: '35px',
     color: 'white',
-    height: '53%',
+    height: '54%',
     scrollbars: false,
   },
 };
@@ -115,28 +115,31 @@ export const AuthModal: React.FC<LoginProps> = ({ authModalIsOpen, closeModal }:
               </div>
 
               <div className='w-full flex space-x-4 justify-center items-center cursor-pointer'>
-              <LoginSocialLinkedin
-                // isOnlyGetToken
-                client_id={'86e6qf8zqc75ve'}
-                client_secret={'2hpm6KXIBu4B0bO1'}
-                redirect_uri={"http://localhost:4000"}
-                scope="r_emailaddress,r_liteprofile"
-                // typeResponse="idToken"
-                // onLoginStart={handleLinkedinSignin}
-                onResolve={({ provider, data }: IResolveParams) => {
-                  console.log("provider", provider);
-                  console.log("data", data);
-                  setProvider(provider)
-                  setProfile(data)
-                  // handleLinkedinSignin(req);
-                }}
-                onReject={(err: any) => {
-                  console.log(err)
-                }}
-              >
-                
+                <LoginSocialLinkedin
+                  isOnlyGetToken
+                  client_id={'78vop33tng3dru'}
+                  client_secret={'hVHwBx6eke9temBr'}
+                  redirect_uri={"https://culero.netlify.app"}
+                  scope="email,profile"
+                  ux_mode="popup"
+                  access_type='offline'
+                  onLoginStart={() => {
+                    console.log("Linkedin Login Start");
+                  }}
+                  onResolve={({ provider, data }: IResolveParams) => {
+                    console.log("provider", provider);
+                    console.log("data", data);
+                    setProvider(provider)
+                    setProfile(data)
+                    // handleLinkedinSignin(req);
+                  }}
+                  onReject={(err: any) => {
+                    console.log(err)
+                  }}
+                >
+
                   <img src={LinkedinIcon} alt='Linkedin Icon' className='w-[100px]' />
-              </LoginSocialLinkedin>
+                </LoginSocialLinkedin>
               </div>
 
             </div>

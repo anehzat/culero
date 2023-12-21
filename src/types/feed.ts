@@ -19,4 +19,5 @@ export type ReviewDetailType = {
     avatar: string,
     star: number,
     review: string
+    anonymous_user: boolean;
 }

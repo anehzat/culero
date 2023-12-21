@@ -27,13 +27,31 @@ export type IUser = {
     lastname: string;
     username: string;
     picture: string;
+    avg_score: number;
     github?: string;
     linkedin?: string;
 }
 export type IReviewDetail = {
     content: string;
     score: number;
+    anonymous_user: boolean;
     reviewer_id: IUser;
+}
+
+export type IRecentReviewDetail = {
+    picture: string,
+    username: string,
+    avgscore: number,
+    link: string,
+    score: number;
+    user_id: string;
+    reviews: Array<{
+        _id: string;
+        picture: string;
+        username: string;
+        score: number;
+        content: string;
+    }>,
 }
 
 export type IReview = {
@@ -42,14 +60,17 @@ export type IReview = {
     createdAt: string;
 }
 
+export type IRecentReview = {
+    user_id: IUser;
+    review: Array<IReviewDetail>;
+    createdAt: string;
+}
 export type LoginRequest = {
     email: string;
     firstname: string;
     lastname: string;
     name: string;
     picture: string;
-    type: string;
-    token: string;
 };
   
 export type LoginResponse = ApiResponse<IUser, 'user'> & {
@@ -61,6 +82,10 @@ export type ReviewDataByUserResponse = {
     count: number;
 }
 
+export type RecentReviewDataResponse = {
+    reviews: Array<IRecentReview>,
+}
+
 export type ReviewDataByUserRequest = {
     user_id: string;
     skip: number;
@@ -68,9 +93,38 @@ export type ReviewDataByUserRequest = {
 }
 
 export type ReviewRequest = {
-    platform: string;
+    user_id: string;
+    anonymous_user: boolean;
+    reviewer_id: string;
     text: string;
-    link: string;
     score: number;
 };
 
+export type AddReviewByLinkRequest = {
+    platform: string;
+    link:string;
+    anonymous_user: boolean;
+    reviewer_id: string;
+    text: string;
+    score: number;
+};
+
+export type SearchUserRequest = {
+    search_key: string; 
+}
+
+export type SearchUserResponse = {
+    users: Array<{
+        _id: string;
+        picture: string;
+        username: string;
+    }>,
+}
+
+export type GetUserByIDRequest = {
+    user_id: string; 
+}
+
+export type GetUserByIDResponse = {
+    user: IUser
+}

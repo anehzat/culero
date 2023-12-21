@@ -1,8 +1,6 @@
-import { NavItem, items } from '@/contents/Navbar'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { Link } from 'react-scroll'
 import { useContents } from '@/hooks'
 
 type Inputs = {
@@ -23,6 +21,7 @@ export const Contact = () => {
 
   const formOptions = { resolver: yupResolver(formSchema) }
   const { register, handleSubmit } = useForm(formOptions)
+  
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log("Contact Data ", data);
@@ -38,29 +37,7 @@ export const Contact = () => {
             </div>
           </div>
           <div className="hidden gap-2 justify-around lg:grid lg:grid-cols-2 md:gap-8 lg:gap-6 lg:max-w-[220px]">
-            
-          </div>
-          <div className="gap-2 justify-around flex md:gap-8 lg:gap-6 lg:max-w-[220px] lg:hidden">
-            {items.map((item: NavItem, index: number) => {
-              return (
-                <div key={index}>
-                  {index !== 0 && (
-                    <span className=" text-white md:text-xl text-sm font-[500] hover:cursor-pointer ">|</span>
-                  )}
-                  <Link
-                    // key={index}
-                    to={item.link}
-                    spy={true}
-                    smooth={true}
-                    offset={-70}
-                    duration={500}
-                    className=" text-white md:text-xl text-sm font-[500] hover:cursor-pointer"
-                  >
-                    {item.title}
-                  </Link>
-                </div>
-              )
-            })}
+
           </div>
           <div>
             <form onSubmit={handleSubmit(onSubmit)} className="text-cgray-500 font-[300] text-sm lg:text-xl">
@@ -94,6 +71,8 @@ export const Contact = () => {
           </div>
         </div>
       </div>
+
+      
     </div>
   )
 }

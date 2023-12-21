@@ -14,9 +14,17 @@ export interface IContents {
     about: {
       description: string
     }
+    why: {
+      first: string
+      second: string
+      third: string
+    },
+    mission: string
+    join: string
   }
   about: {
     about: string
+    aboutSec: string
   }
   how: {
     how: HowProp[]
@@ -34,66 +42,97 @@ export const contents: IContents = {
       description:
         'At Culero, we believe in the power of shared experiences to shape professional journeys. Our platform is designed to foster transparency and collaboration within the professional community. Join us in building a space where career insights are accessible to all.',
     },
+    why: {
+      first: `Insights That Matter: Gain valuable insights into your potential manager's style based on real, peer-driven reviews.`,
+      second: `Empowering Employees: Your voice matters. Culero provides a platform for employees to share their experiences and shape workplace cultures.`,
+      third: `Bottom-Up Management: Foster a culture of transparency by empowering employees to review and assess managerial effectiveness.`
+    },
+    mission: `Culero is dedicated to revolutionizing the workplace dynamic by fostering transparency and trust through employee-driven reviews. We're based in Delaware, committed to providing a platform where every voice counts.`,
+    join: `Empower Yourself: Make informed decisions about your work environment.
+    Shape Workplace Culture: Contribute to a culture of transparency and accountability.
+    Join Our Community: Connect with like-minded individuals and share your experiences.
+    Join us in reshaping the way we view management and creating better workplaces through shared experiences.`
   },
   about: {
     about:
-    'At Culero, we believe in the power of shared experiences to shape professional journeys. Our platform is designed to foster transparency and collaboration within the professional community. Join us in building a space where career insights are accessible to all.',
+    `Culero is revolutionizing the workplace dynamic by providing a space for honest and informative reviews of managers. Founded in the heart of Delaware, Culero's mission is to empower employees by offering a platform that facilitates a deeper understanding of managerial styles.`,
+    aboutSec: `We recognize the significance of the work environment in an individual's life and aim to foster transparency and trust through peer-based reviews. Culero operates with the core belief that every voice matters in shaping a healthy workplace culture.`
   },
   how: {
     how: [
       {
-        title: 'Submit a Social Profile:',
+        title: 'Find Your Manager:',
         content:
-          `Begin your journey on Culero by submitting the social profile link of the individual whose career you want to review. Whether it's GitHub, LinkedIn, Twitter, Instagram, or other platforms, Culero has got you covered.`,
+          `Locate the social profile of the manager you'd like to review.`,
       },
       {
-        title: 'Data Analysis:',
+        title: 'Share Your Experience:',
         content:
-          `Culero leverages advanced algorithms to analyze the submitted social profile. We extract key career data to provide you with a comprehensive overview, from professional achievements to project contributions.`,
+          `Write a review based on your unique experiences and interactions.`,
       },
       {
-        title: `Insightful Reviews:`,
+        title: `Empower Others:`,
         content:
-          `Receive detailed insights about the individual's career. Understand their strengths, skills, and contributions within the professional sphere. Culero compiles a holistic review to help you make informed decisions.`,
-      },
-      {
-        title: `Share Your Perspective:`,
-        content:
-          `Contribute to the Culero community by sharing your own insights and experiences. Culero is a collaborative platform, and your unique perspective adds value to the collective knowledge base.`,
-      },
-      {
-        title: `Single Sign-On (SSO) Login:`,
-        content:
-          `Experience a seamless and secure login process through Single Sign-On (SSO). Currently supporting GitHub and LinkedIn, Culero ensures that your information is protected while providing easy access to the platform.`,
-      },
-      {
-        title: `Community Engagement:`,
-        content:
-          `Engage with other Culero users, explore diverse career paths, and build a network of like-minded professionals. Culero fosters a community-driven approach to career exploration and review.`,
+          `Contribute to a database of peer reviews to guide others in their workplace decisions.`,
       },
     ],
   },
   faq: {
     faq: [
       {
-        title: `Q: How do I review someone's career on Culero?`,
+        title: `Q: What is Culero and how does it work?`,
         content:
-          `A: Simply enter the social profile link of the individual you want to review, and Culero will provide you with valuable career insights.`,
+          `A: Culero is a platform that allows employees to review their managers based on personal experiences. Users locate their manager's social profile and write reviews, sharing insights into managerial styles.`,
       },
       {
-        title: 'Q: Which social platforms are supported for reviews?',
+        title: 'Q: Are the reviews on Culero anonymous?',
         content:
-          `A: Currently, you can review professionals on GitHub, LinkedIn, Facebook, Twitter, Instagram, and more.`,
+          `A: Yes, users have the option to keep their reviews anonymous or choose to share their details publicly.`,
       },
       {
-        title: `Q: Is my login information secure?`,
+        title: `Q: Can managers respond to the reviews posted about them?`,
         content:
-          `A: Yes, we prioritize the security of your data. Culero uses Single Sign-On (SSO) for login, currently supporting GitHub and LinkedIn.`,
-      }
+          `A: Managers have the ability to respond to reviews on Culero, fostering constructive dialogue between employees and managers.`,
+      },
+      {
+        title: `How does Culero ensure the accuracy of reviews?`,
+        content:
+          `A: Culero encourages honest and genuine reviews based on individual experiences. Users are advised to share factual and relevant information.`,
+      },
+      {
+        title: `Q: Can I post a review if I no longer work with the manager or company?`,
+        content:
+          `A: Yes, Culero allows former employees to share their experiences and contribute to the database of reviews.`,
+      },
+      {
+        title: `Q: Are there guidelines for writing reviews on Culero?`,
+        content:
+          `A: Yes, Culero provides guidelines to ensure reviews are constructive, respectful, and based on firsthand experiences.`,
+      },
+      {
+        title: `Q: Can companies or managers influence or remove reviews on Culero?`,
+        content:
+          `A: Culero maintains review integrity and does not allow companies or managers to influence or remove reviews without valid reasons.`,
+      },
+      {
+        title: `Q: How does Culero protect user privacy and data?`,
+        content:
+          `A: Culero takes user privacy seriously, employing industry-standard security measures to safeguard personal information. Detailed privacy policies outline data handling practices.`,
+      },
+      {
+        title: `Q: Is there a process to report inappropriate content or reviews on Culero?`,
+        content:
+          `A: Yes, Culero provides a reporting system for users to flag inappropriate content or reviews that violate community guidelines.`,
+      },
+      {
+        title: `Q: Can I search for specific types of reviews or managers on Culero?`,
+        content:
+          `A: Culero offers search functionalities, allowing users to filter reviews based on various criteria, such as industry, managerial traits, or company size.`,
+      }   
     ],
   },
   footer: {
     description:
-      'Welcome to Culero, the platform that empowers users to review and share insights about professionals on popular social platforms. In a single word: transparency. Gain valuable career perspectives by entering the social profile links (e.g., GitHub, LinkedIn, Twitter, Instagram) of individuals you want to review.'
+      'At Culero, we believe in the power of transparency and the importance of a healthy work environment. Our platform is designed to offer a unique perspective on managerial styles, enabling employees to make informed decisions about their workplace.'
   },
 }

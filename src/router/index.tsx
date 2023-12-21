@@ -1,6 +1,5 @@
 import { Dashboard } from '@/pages/Dashboard'
 import { About } from '@/pages/About'
-import { How } from '@/pages/How'
 import { FAQ } from '@/pages/FAQ'
 import { Profile} from '@/pages/Profile'
 import { Navigate, createBrowserRouter } from 'react-router-dom'
@@ -20,10 +19,6 @@ export const router = createBrowserRouter([
       {
         path: '/about',
         element: <About />,
-      },
-      {
-        path: '/how',
-        element: <How />,
       },
       {
         path: '/faq',

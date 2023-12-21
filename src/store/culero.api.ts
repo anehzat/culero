@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify';
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-const API_PREFIX = 'http://localhost:3001/api';
-import { setAuthToken, setUserReviewData, setTotalUserReviewCount, setUser } from './status';
-import { ApiError, LoginRequest, LoginResponse, ReviewDataByUserRequest, ReviewDataByUserResponse, ReviewRequest } from './interface';
+const API_PREFIX = import.meta.env.VITE_API_PREFIX || '';
+import { setAuthToken, setUserReviewData, setTotalUserReviewCount, setUser, setUserSearchResult, setUserByID, setRecentReview } from './status';
+import { AddReviewByLinkRequest, ApiError, GetUserByIDRequest, GetUserByIDResponse, LoginRequest, LoginResponse, RecentReviewDataResponse, ReviewDataByUserRequest, ReviewDataByUserResponse, ReviewRequest, SearchUserRequest, SearchUserResponse } from './interface';
 
 export const displayError = (
   err: ApiError | undefined,
@@ -69,6 +69,29 @@ export const api = createApi({
         return err.data;
       },
     }),
+    getRecentReview: builder.mutation<RecentReviewDataResponse, {}>({
+      query: () => ({
+        // body: payload,
+        method: 'GET',
+        url: '/review/getRecentReview',
+        headers: getHeadersFromToken('', true),
+      }),
+      async onQueryStarted(_, { queryFulfilled, dispatch }) {
+        try {
+          const {
+            data: {
+              reviews,
+            }
+          } = await queryFulfilled;
+          dispatch(setRecentReview(reviews));
+        } catch (e: any) {
+          displayError(e, 'Error while logging in');
+        }
+      },
+      transformErrorResponse(err) {
+        return err.data;
+      },
+    }),
     getReviewByUser: builder.mutation<ReviewDataByUserResponse, { payload: ReviewDataByUserRequest, token: string }>({
       query: ({payload, token}) => ({
         body: payload,
@@ -111,6 +134,75 @@ export const api = createApi({
           });
         } catch (e: any) {
           displayError(e, 'Error while adding your review');
+        }
+      },
+      transformErrorResponse(err) {
+        return err.data;
+      },
+    }),
+    addReviewByLink: builder.mutation<boolean, { payload: AddReviewByLinkRequest, token: string }>({
+      query: ({ payload, token }) => ({
+        body: payload,
+        method: 'POST',
+        url: '/review/addReviewByLink',
+        headers: getHeadersFromToken(token, true),
+      }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+
+          toast('Added review successfully', {
+            position: 'top-right',
+            closeButton: false,
+          });
+        } catch (e: any) {
+          displayError(e, 'Error while adding your review');
+        }
+      },
+      transformErrorResponse(err) {
+        return err.data;
+      },
+    }),
+    getUserBySearch: builder.mutation<SearchUserResponse, SearchUserRequest>({
+      query: (cred) => ({
+        body: cred,
+        method: 'POST',
+        url: '/user/getUserBySearch',
+        headers: getHeadersFromToken('', true),
+      }),
+      async onQueryStarted(_, { queryFulfilled, dispatch }) {
+        try {
+          const {
+            data: {
+              users
+            }
+          } = await queryFulfilled;
+          dispatch(setUserSearchResult(users));          
+        } catch (e: any) {
+          displayError(e, 'Error while logging in');
+        }
+      },
+      transformErrorResponse(err) {
+        return err.data;
+      },
+    }),
+    getUserByID: builder.mutation<GetUserByIDResponse, GetUserByIDRequest >({
+      query: (cred) => ({
+        body: cred,
+        method: 'POST',
+        url: '/user/getUserByID',
+        headers: getHeadersFromToken('', true),
+      }),
+      async onQueryStarted(_, { queryFulfilled, dispatch }) {
+        try {
+          const {
+            data: {
+              user
+            }
+          } = await queryFulfilled;
+          dispatch(setUserByID(user));
+        } catch (e: any) {
+          displayError(e, 'Error while getting data');
         }
       },
       transformErrorResponse(err) {
