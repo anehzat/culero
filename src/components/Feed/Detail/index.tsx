@@ -9,7 +9,6 @@ import { api } from '@/store/culero.api';
 
 export const FeedDetail = () => {
     const recentReviewData = useSelector(selectRecentReview);
-    console.log(recentReviewData);
     const [getRecentReview] = api.useGetRecentReviewMutation();
     const getRecentReviewHandler = async () => {
         await getRecentReview(true);
@@ -47,7 +46,7 @@ export const FeedDetail = () => {
                                 {
                                     data.review &&
                                     data.review?.map((item: IReviewDetail, index: number) => (
-                                        <ReviewDetail key={index} anonymous_user={item.anonymous_user} name={item.reviewer_id?.username} avatar={item.reviewer_id?.picture} star={item.score} review={item.content} />
+                                        <ReviewDetail key={index} anonymous_user={item.anonymous_user} name={item.reviewer_id?.username} avatar={item.reviewer_id?.picture} star={item.score} review={item.content} date={item.date} _id={item._id} user_id={data.user_id?._id}/>
                                     ))
                                 }
                             </div>

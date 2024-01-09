@@ -181,11 +181,10 @@ export const Navbar = () => {
           }
         </div> */}
 
-        <div className="flex items-center justify-center md:w-[40%]">
+        <div className="relative flex items-center justify-center md:w-[40%]">
           <input type="input" className="w-full focus:outline-none border-2 px-1 py-1 rounded-[10px] border-[#5f6fdb] bg-transparent placeholder:text-[#00000078]" placeholder='Search...' onChange={(e) => setSearhText(e.target.value)} onKeyPress={handleKeyPress} />
-        </div>
 
-        <div className="absolute bg-[#5f6fdb] lg:top-[88px] lg:left-[18%] lg:w-[30%] md:top-[70px] md:w-[37%] sm:top-[54px] sm:left-[25%] sm:w-[30%] top-[54px] left-[23%] w-[42%] rounded-md text-white overflow-y" ref={searchRef}>
+          <div className="absolute bg-[#5f6fdb] top-[38px] left-0 w-full rounded-md text-white overflow-y" ref={searchRef}>
           {
             searchUserResult?.length > 0 &&
             searchUserResult?.map((data: SearchUserInfor, index: number) => (
@@ -197,6 +196,7 @@ export const Navbar = () => {
               </div>
             ))
           }
+        </div>
         </div>
 
         {/* desktop nav */}

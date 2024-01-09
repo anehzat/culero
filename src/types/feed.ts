@@ -20,4 +20,7 @@ export type ReviewDetailType = {
     star: number,
     review: string
     anonymous_user: boolean;
+    date: string;
+    _id: string;
+    user_id: string;
 }

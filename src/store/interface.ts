@@ -36,6 +36,9 @@ export type IReviewDetail = {
     score: number;
     anonymous_user: boolean;
     reviewer_id: IUser;
+    date: string;
+    user_id: string;
+    _id: string;
 }
 
 export type IRecentReviewDetail = {
@@ -64,6 +67,7 @@ export type IRecentReview = {
     user_id: IUser;
     review: Array<IReviewDetail>;
     createdAt: string;
+    updatedAt: string;
 }
 export type LoginRequest = {
     email: string;
@@ -96,6 +100,13 @@ export type ReviewRequest = {
     user_id: string;
     anonymous_user: boolean;
     reviewer_id: string;
+    text: string;
+    score: number;
+};
+
+export type EditReviewRequest = {
+    review_id: string;
+    anonymous_user: boolean;
     text: string;
     score: number;
 };

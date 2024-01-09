@@ -1,5 +1,5 @@
 import { api } from '@/store/culero.api';
-import { selectAuthToken, selectUser } from '@/store/status';
+import { selectAuthToken } from '@/store/status';
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import ReactQuill from 'react-quill';
@@ -9,18 +9,21 @@ import ReactStars from 'react-stars'
 
 export type ReviewFormModalProps = {
     reviewModalIsOpen: boolean,
-    closeModal: () => void
+    closeModal: () => void;
+    star: number;
+    review: string;
+    anonymous_user: boolean;
+    _id: string;
 }
 
-export const ReviewForm: React.FC<ReviewFormModalProps> = ({ reviewModalIsOpen, closeModal }: ReviewFormModalProps) => {
-    const [reviewText, setReviewText] = useState("");
-    const [anonymous, setAnonymous] = useState(false);
-    const [rating, setRating] = useState<number>(0);
+export const ReviewEditForm: React.FC<ReviewFormModalProps> = ({ reviewModalIsOpen, closeModal, star, review, anonymous_user, _id }: ReviewFormModalProps) => {
+    const [reviewText, setReviewText] = useState(review);
+    const [anonymous, setAnonymous] = useState(anonymous_user);
+    const [rating, setRating] = useState<number>(star);
 
     const token = useSelector(selectAuthToken);
-    const user = useSelector(selectUser);
 
-    const [addReview] = api.useAddReviewMutation();
+    const [editReview] = api.useEditReviewMutation();
     const [getReviewData] = api.useGetReviewByUserMutation()
     const descriptionChange = (e: any) => {
         setReviewText(e);
@@ -29,15 +32,14 @@ export const ReviewForm: React.FC<ReviewFormModalProps> = ({ reviewModalIsOpen, 
     const ratingChanged = (newRating: number) => {
         setRating(newRating);
     };
-    const addReviewHandler = async () => {
+    const editReviewHandler = async () => {
         const current_page = location.pathname.split('/')[2]
-        const result = await addReview({
+        const result = await editReview({
             payload: {
-                user_id: current_page,
+                review_id: _id,
                 text: reviewText,
                 anonymous_user: anonymous,
                 score: rating,
-                reviewer_id: anonymous ? '' : user._id
             },
             token
         });
@@ -51,9 +53,9 @@ export const ReviewForm: React.FC<ReviewFormModalProps> = ({ reviewModalIsOpen, 
                 },
                 token
             })
-            setReviewText("");
-            setRating(0);
-            setAnonymous(false);
+            // setReviewText("");
+            // setRating(0);
+            // setAnonymous(false);
         }
 
     }
@@ -86,10 +88,10 @@ export const ReviewForm: React.FC<ReviewFormModalProps> = ({ reviewModalIsOpen, 
                         />
                     </div>
                     <div className='flex gap-1 items-center '>
-                        <input type='checkbox' onChange={() => setAnonymous(!anonymous)} /> Send a review anonymously
+                        <input type='checkbox' onChange={() => setAnonymous(!anonymous)} checked={anonymous} /> Send a review anonymously
                     </div>
                 </div>
-                <button className="border-2 px-4 py-2 text-center  rounded-[10px] border-[#5f6fdb] bg-[#5f6fdb] hover:bg-transparent duration-200" onClick={addReviewHandler}>Submit</button>
+                <button className="border-2 px-4 py-2 text-center  rounded-[10px] border-[#5f6fdb] bg-[#5f6fdb] hover:bg-transparent duration-200" onClick={editReviewHandler}>Submit</button>
             </div>
         </Modal>
     )

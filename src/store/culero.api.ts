@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 const API_PREFIX = import.meta.env.VITE_API_PREFIX || '';
 import { setAuthToken, setUserReviewData, setTotalUserReviewCount, setUser, setUserSearchResult, setUserByID, setRecentReview } from './status';
-import { AddReviewByLinkRequest, ApiError, GetUserByIDRequest, GetUserByIDResponse, LoginRequest, LoginResponse, RecentReviewDataResponse, ReviewDataByUserRequest, ReviewDataByUserResponse, ReviewRequest, SearchUserRequest, SearchUserResponse } from './interface';
+import { AddReviewByLinkRequest, ApiError, GetUserByIDRequest, GetUserByIDResponse, LoginRequest, LoginResponse, RecentReviewDataResponse, ReviewDataByUserRequest, ReviewDataByUserResponse, ReviewRequest, SearchUserRequest, SearchUserResponse, EditReviewRequest } from './interface';
 
 export const displayError = (
   err: ApiError | undefined,
@@ -111,6 +111,29 @@ export const api = createApi({
           dispatch(setTotalUserReviewCount(count));
         } catch (e: any) {
           displayError(e, 'Error while logging in');
+        }
+      },
+      transformErrorResponse(err) {
+        return err.data;
+      },
+    }),
+    editReview: builder.mutation<boolean, { payload: EditReviewRequest, token: string }>({
+      query: ({ payload, token }) => ({
+        body: payload,
+        method: 'POST',
+        url: '/review/editReview',
+        headers: getHeadersFromToken(token, true),
+      }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+
+          toast('Updated review successfully', {
+            position: 'top-right',
+            closeButton: false,
+          });
+        } catch (e: any) {
+          displayError(e, 'Error while adding your review');
         }
       },
       transformErrorResponse(err) {

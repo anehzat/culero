@@ -81,7 +81,7 @@ export const Profile = () => {
         getReviewDataHandler()
     }, [pageIndex])
     return (
-        <div className='pt-20 flex flex-col justify-center bg-gradient-to-t from-[#3231b2ad] to-[#aeb3e97d]'>
+        <div className='pt-20 flex flex-col justify-center bg-gradient-to-t from-[#3231b2ad] to-[#aeb3e97d] h-screen'>
             <div className="mx-auto flex justify-between items-center md:w-[60%] w-[90%]">
                 <Detail avg_score={searchUser?.avg_score} picture={searchUser?.picture} username={searchUser?.username} />
                 { showReviewButton?<button className="bg-gradient-to-r from-[#3231b2ad] to-[#4e59ce7d] text-[12px]" onClick={() => setReviewModalIsOpen(true)}>Leave Review</button> : ''}
@@ -91,7 +91,7 @@ export const Profile = () => {
                     {
                         userReviewData ?
                             userReviewData?.review?.map((item: IReviewDetail, index: number) => (
-                                <ReviewDetail key={index} anonymous_user={item.anonymous_user} name={item.reviewer_id?.username} avatar={item.reviewer_id?.picture} star={item.score} review={item.content} />
+                                <ReviewDetail key={index} anonymous_user={item.anonymous_user} name={item.reviewer_id?.username} avatar={item.reviewer_id?.picture} star={item.score} review={item.content} date={item.date} _id={item._id} user_id={item.reviewer_id?._id}/>
                             ))
                             :
                             <p className="flex justify-center items-center">No Review</p>
